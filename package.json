@@ -1,0 +1,43 @@
+{
+  "name": "@cocreate/mysql",
+  "version": "1.0.0",
+  "description": "A simple mysql component in vanilla javascript. Easily configured using HTML5 data-attributes and/or JavaScript API.",
+  "keywords": [
+    "mysql",
+    "low-code",
+    "realtime",
+    "realtime-framework",
+    "collaboration",
+    "shared-editing",
+    "html5-framework",
+    "javascript-framework"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "start": "webpack --config webpack.config.js",
+    "build": "webpack --mode=production --config webpack.config.js",
+    "dev": "webpack --config webpack.config.js --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoCreate-app/CoCreate-mysql.git"
+  },
+  "author": "CoCreate LLC",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/CoCreate-app/CoCreate-mysql/issues"
+  },
+  "homepage": "https://cocreate.app/docs/mysql",
+  "funding": {
+    "type": "GitHub Sponsors ❤",
+    "url": "https://github.com/sponsors/CoCreate-app"
+  },
+  "type": "module",
+  "main": "./src/index.js",
+  "dependencies": {
+    "@cocreate/utils": "^1.44.0",
+    "mysql": "^7.5.0"
+  }
+}
