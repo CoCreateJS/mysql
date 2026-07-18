@@ -1,11 +1,28 @@
-const mysql = require("mysql2/promise");
-const {
+/********************************************************************************
+ * Copyright (C) 2026 CoCreate and Contributors.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ ********************************************************************************/
+
+import mysql from "mysql2/promise";
+import {
 	dotNotationToObject,
 	queryData,
 	searchData,
 	sortData,
 	isValidDate
-} = require("@cocreate/utils");
+} from "@cocreate/utils";
 
 const organizations = {};
 
@@ -91,7 +108,7 @@ process.on("orgDeleted", (organization_id) => {
 /**
  * Universal router routing request methods safely.
  */
-function send(data) {
+export function send(data) {
 	let [type, method] = data.method.split(".");
 	if (type === "database") return database(method, data);
 	if (type === "array") return array(method, data);
@@ -109,7 +126,7 @@ function database(method, data) {
 
 			try {
 				const pool = await dbClient(data);
-				if (!pool || pool.status === false) return data;
+				if (!pool || pool.status === false) return resolve(data);
 
 				if (method === "read") {
 					const sql = "SHOW DATABASES;";
@@ -171,9 +188,6 @@ function database(method, data) {
 				console.log(method, "error", error);
 				resolve(data);
 			}
-		},
-		(error) => {
-			errorHandler(data, error);
 		}
 	);
 }
@@ -189,7 +203,7 @@ function array(method, data) {
 
 			try {
 				const pool = await dbClient(data);
-				if (!pool || pool.status === false) return data;
+				if (!pool || pool.status === false) return resolve(data);
 
 				if (data.request) data.array = data.request;
 
@@ -334,9 +348,6 @@ function array(method, data) {
 				console.log(method, "error", error);
 				resolve(data);
 			}
-		},
-		(error) => {
-			errorHandler(data, error);
 		}
 	);
 }
@@ -349,7 +360,7 @@ function object(method, data) {
 		async (resolve, reject) => {
 			try {
 				const pool = await dbClient(data);
-				if (!pool || pool.status === false) return data;
+				if (!pool || pool.status === false) return resolve(data);
 
 				let type = "object";
 				let documents = [];
@@ -584,9 +595,6 @@ function object(method, data) {
 				console.log(method, "error", error);
 				resolve(data);
 			}
-		},
-		(error) => {
-			errorHandler(data, error);
 		}
 	);
 }
@@ -654,7 +662,8 @@ async function executeUpdateTransaction(pool, arrayName, docId, rawUpdateInput, 
 }
 
 /**
- * Applies MongoDB update operators recursively to maintain unified schema manipulation behaviors.
+ * Applies MongoDB update operators ($set, $unset, $push, $pull, $addToSet, $inc)
+ * recursively on a target record to maintain unified schema manipulation behaviors.
  */
 function applyMongoUpdate(record, updatePayload) {
 	let target = { ...record };
@@ -907,4 +916,4 @@ function errorHandler(data, error, database, array) {
 	}
 }
 
-module.exports = { send };
+export default { send };

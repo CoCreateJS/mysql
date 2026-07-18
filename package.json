@@ -1,16 +1,20 @@
 {
   "name": "@cocreate/mysql",
   "version": "1.0.0",
-  "description": "A simple mysql component in vanilla javascript. Easily configured using HTML5 data-attributes and/or JavaScript API.",
+  "description": "Lightweight MySQL, MariaDB, and Aurora CRUD wrapper and multi-tenant state routing client for the CoCreate ecosystem.",
   "keywords": [
     "mysql",
-    "low-code",
-    "realtime",
-    "realtime-framework",
-    "collaboration",
-    "shared-editing",
-    "html5-framework",
-    "javascript-framework"
+    "mariadb",
+    "aurora",
+    "sql",
+    "json",
+    "crud-api",
+    "abstract-crud",
+    "database-abstraction",
+    "multi-tenant",
+    "multi-tenant-routing",
+    "realtime-sync",
+    "state-synchronization"
   ],
   "publishConfig": {
     "access": "public"
@@ -38,6 +42,6 @@
   "main": "./src/index.js",
   "dependencies": {
     "@cocreate/utils": "^1.44.0",
-    "mysql": "^7.5.0"
+    "mysql2": "^3.22.6"
   }
 }
