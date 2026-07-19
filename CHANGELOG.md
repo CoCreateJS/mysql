@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/CoCreate-app/CoCreate-mysql/compare/v1.1.0...v1.2.0) (2026-07-19)
+
+
+### Features
+
+* update README.md to reflect MySQL integration and enhance documentation ([e2546cb](https://github.com/CoCreate-app/CoCreate-mysql/commit/e2546cb459dd85d71f76e1d7335d2c8a8bea1ce1))
+
 # [1.1.0](https://github.com/CoCreate-app/CoCreate-mysql/compare/v1.0.0...v1.1.0) (2026-07-18)
 
 
