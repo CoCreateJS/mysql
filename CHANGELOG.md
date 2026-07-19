@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/CoCreate-app/CoCreate-mysql/compare/v1.2.0...v1.2.1) (2026-07-19)
+
+
+### Bug Fixes
+
+* set default branch to main ([342cf86](https://github.com/CoCreate-app/CoCreate-mysql/commit/342cf86faecb87d16721eb24310d4715730d54cf))
+
 # [1.2.0](https://github.com/CoCreate-app/CoCreate-mysql/compare/v1.1.0...v1.2.0) (2026-07-19)
 
 
