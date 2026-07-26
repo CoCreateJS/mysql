@@ -40,8 +40,11 @@
   },
   "type": "module",
   "main": "./src/index.js",
+  "devDependencies": {
+    "@cocreate/webpack": "^1.6.0"
+  },
   "dependencies": {
     "@cocreate/utils": "^1.44.3",
-    "mysql2": "^3.22.6"
+    "mysql2": "^3.23.1"
   }
 }
