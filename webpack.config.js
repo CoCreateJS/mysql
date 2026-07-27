@@ -1,7 +1,25 @@
+/********************************************************************************
+ * Copyright (C) 2026 CoCreate and Contributors.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ ********************************************************************************/
+
 import webpack from "webpack";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { EsbuildPlugin } from "esbuild-loader";
+import { FileUploader } from "@cocreate/webpack";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,11 +49,12 @@ export default async (env, argv) => {
                 type: "module"
             },
             clean: true,
+            // Retain standard global scope in worker threads
             globalObject: "this"
         },
 
         resolve: {
-            extensions: [".js", ".mjs", ".cjs", ".json"],
+            extensions: [".js", ".mjs", ".cjs", ".json", ".ts"],
             fullySpecified: false
         },
 
@@ -45,30 +64,34 @@ export default async (env, argv) => {
         },
 
         plugins: [
-            // Force Webpack to merge into 1 single bundle file
+            // Enforce single-file bundle output without dynamic split chunks
             new webpack.optimize.LimitChunkCountPlugin({
                 maxChunks: 1
             }),
 
-            // Ignore iconv-lite heavy encoding table files (Big5, Shift_JIS, EUC-JP, etc.)
-            // mysql2 will fall back to Node.js native C++ Buffer for UTF-8 and standard encodings.
+            // Optimize MySQL bundle size by ignoring non-essential legacy character encodings in iconv-lite/mysql2
             new webpack.IgnorePlugin({
                 resourceRegExp: /^\.\/encodings$/,
                 contextRegExp: /iconv-lite$/
             }),
 
-            // Ignore non-essential optional dependencies and binary modules
+            // Ignore optional bindings, documentation, and cloud metadata providers
             new webpack.IgnorePlugin({
-                resourceRegExp: /^(aws-sdk|cardinal|tls-psk|@aws-sdk\/.*|\.d\.ts)$/
-            })
+                resourceRegExp: /^(cardinal|gcp-metadata|aws-sdk|\.d\.ts)$/
+            }),
+
+            // Uploads bundled driver script to CDN/HTTP endpoint if configured
+            new FileUploader(env, argv)
         ],
 
-        mode: isProduction ? "production" : "development",
+        // Disable source map generation to eliminate .map files and minimize bundle footprint
         devtool: false,
+        mode: isProduction ? "production" : "development",
 
         module: {
             rules: [
                 {
+                    // Relax strict ESM extension requirements for node_modules resolution
                     test: /\.m?[jc]s$/,
                     type: "javascript/auto",
                     resolve: {
@@ -82,6 +105,17 @@ export default async (env, argv) => {
                         loader: "esbuild-loader",
                         options: {
                             loader: "js",
+                            target: "node18"
+                        }
+                    }
+                },
+                {
+                    test: /\.ts$/,
+                    exclude: [/node_modules/, /\.d\.ts$/],
+                    use: {
+                        loader: "esbuild-loader",
+                        options: {
+                            loader: "ts",
                             target: "node18"
                         }
                     }
