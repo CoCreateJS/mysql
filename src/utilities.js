@@ -31,17 +31,19 @@ const organizations = {};
  * Caches the connection promise to prevent concurrent, duplicate handshakes.
  */
 async function dbClient(data) {
-	if (data.storageUrl) {
+	const storageUrl = data.storageConfig?.url
+
+	if (storageUrl) {
 		if (!organizations[data.organization_id]) {
 			organizations[data.organization_id] = {};
 		}
 		try {
-			if (!organizations[data.organization_id][data.storageUrl]) {
+			if (!organizations[data.organization_id][storageUrl]) {
 				// Establish connection pool using the provided URL
 				// mysql2 natively parses URIs like mysql://user:pass@host:port/database
 				const poolPromise = (async () => {
 					const pool = mysql.createPool({
-						uri: data.storageUrl,
+						uri: storageUrl,
 						connectionLimit: 10,
 						idleTimeout: 30000,
 						connectTimeout: 5000,
@@ -54,14 +56,14 @@ async function dbClient(data) {
 					return pool;
 				})();
 
-				organizations[data.organization_id][data.storageUrl] = poolPromise;
+				organizations[data.organization_id][storageUrl] = poolPromise;
 			}
 			
 			// Await connection resolution safely
-			return await organizations[data.organization_id][data.storageUrl];
+			return await organizations[data.organization_id][storageUrl];
 		} catch (error) {
 			console.error(
-				`${data.organization_id}: storageUrl ${data.storageUrl} failed to connect to MySQL/MariaDB`
+				`${data.organization_id}: storageUrl ${storageUrl} failed to connect to MySQL/MariaDB`
 			);
 			errorHandler(data, error);
 			return { status: false };

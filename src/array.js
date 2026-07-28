@@ -16,6 +16,7 @@ import {
  * "array" operations mapped to SQL Tables.
  */
 function array(method, data) {
+    const storageName = data.storageConfig?.name;
     return new Promise(
         async (resolve, reject) => {
             let type = "array";
@@ -57,14 +58,14 @@ function array(method, data) {
                                     arrayArray.push({
                                         name: tableName,
                                         database,
-                                        storage: data.storageName
+                                        storage: storageName
                                     });
                                 }
                             } else {
                                 arrayArray.push({
                                     name: tableName,
                                     database,
-                                    storage: data.storageName
+                                    storage: storageName
                                 });
                             }
                         }
@@ -102,7 +103,7 @@ function array(method, data) {
                                 arrayArray.push({
                                     name: array,
                                     database,
-                                    storage: data.storageName
+                                    storage: storageName
                                 });
 
                                 arraysLength -= 1;
@@ -126,7 +127,7 @@ function array(method, data) {
                                         name: newName,
                                         oldName: oldName,
                                         database,
-                                        storage: data.storageName
+                                        storage: storageName
                                     });
 
                                     arraysLength -= 1;
@@ -149,7 +150,7 @@ function array(method, data) {
                                     arrayArray.push({
                                         name: array,
                                         database,
-                                        storage: data.storageName
+                                        storage: storageName
                                     });
 
                                     arraysLength -= 1;

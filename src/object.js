@@ -16,6 +16,7 @@ import {
  * "object" operations mapped to SQL Rows.
  */
 function object(method, data) {
+    const storageName = data.storageConfig?.name;
     return new Promise(
         async (resolve, reject) => {
             try {
@@ -38,7 +39,7 @@ function object(method, data) {
 
                     for (let array of arrays) {
                         const reference = {
-                            $storage: data.storageName,
+                            $storage: storageName,
                             $database: database,
                             $array: array
                         };
@@ -63,7 +64,7 @@ function object(method, data) {
                             if (!Array.isArray($database)) $database = [data[type][i].$database];
                             if (!Array.isArray($array)) $array = [data[type][i].$array];
 
-                            if (!$storage.includes(data.storageName)) $storage.push(data.storageName);
+                            if (!$storage.includes(storageName)) $storage.push(storageName);
                             if (!$database.includes(database)) $database.push(database);
                             if (!$array.includes(array)) $array.push(array);
 
