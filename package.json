@@ -42,8 +42,8 @@
   "main": "./src/index.js",
   "exports": {
     ".": "./src/index.js",
-    "./distribution": "./dist/mongodb.js",
-    "./installer": "./installer/mongodb.installer.js"
+    "./dist": "./dist/mysql.js",
+    "./installer": "./installer/mysql.installer.js"
   },
   "devDependencies": {
     "@cocreate/webpack": "^1.6.2"
