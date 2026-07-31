@@ -49,7 +49,7 @@
     "@cocreate/webpack": "^1.7.0"
   },
   "dependencies": {
-    "@cocreate/utils": "^1.48.0",
+    "@cocreate/utils": "^1.50.0",
     "mysql2": "^3.23.1"
   }
 }
