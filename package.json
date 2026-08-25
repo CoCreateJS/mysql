@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CoCreate-app/CoCreate-mysql.git"
+    "url": "git+https://gitlab.com/cocreatejs/CoCreate-mysql.git"
   },
   "author": "CoCreate LLC",
   "license": "AGPL-3.0",
