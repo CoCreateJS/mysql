@@ -31,7 +31,7 @@ const organizations = {};
  * Caches the connection promise to prevent concurrent, duplicate handshakes.
  */
 async function dbClient(data) {
-	const storageUrl = data.storageConfig?.url
+	const storageUrl = data.storageConfig?.connectionUri || data.storageConfig?.url;
 
 	if (storageUrl) {
 		if (!organizations[data.organization_id]) {
