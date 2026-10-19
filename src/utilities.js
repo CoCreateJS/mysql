@@ -179,6 +179,10 @@ function applyMongoUpdate(record, updatePayload) {
 	let target = { ...record };
 
 	Object.keys(updatePayload).forEach((rawKey) => {
+		if (rawKey.startsWith("$unset.")) {
+			deleteNestedValue(target, rawKey.slice(7));
+			return;
+		}
 		if (rawKey.startsWith("$")) return;
 		let cleanKey = rawKey.replace(/\[(\d+)\]/g, ".$1");
 		setNestedValue(target, cleanKey, updatePayload[rawKey]);
