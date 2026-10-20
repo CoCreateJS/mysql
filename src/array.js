@@ -90,7 +90,7 @@ function array(method, data) {
                                         organization_id VARCHAR(50),
                                         data JSON,
                                         created JSON,
-                                        modified JSON
+                                        updated JSON
                                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
                                 `;
                                 process.emit("usage", {

@@ -91,7 +91,7 @@ function object(method, data) {
                                 delete recordPayload.organization_id;
 
                                 const sql = `
-                                    INSERT INTO \`${array.replace(/`/g, "")}\` (_id, organization_id, data, created, modified)
+                                    INSERT INTO \`${array.replace(/`/g, "")}\` (_id, organization_id, data, created, updated)
                                     VALUES (?, ?, ?, ?, NULL);
                                 `;
                                 const queryParams = [id, orgId, JSON.stringify(recordPayload), JSON.stringify(created)];
@@ -165,9 +165,9 @@ function object(method, data) {
                                     let dbRecord = parseSqlRow(rows[0]);
 
                                     // Offline timing merge synchronization
-                                    if ($storage.length && data[type][i].modified && data[type][i].modified.on) {
-                                        let clientTime = new Date(data[type][i].modified.on);
-                                        let dbTime = new Date(dbRecord.modified ? dbRecord.modified.on : 0);
+                                    if ($storage.length && data[type][i].updated && data[type][i].updated.on) {
+                                        let clientTime = new Date(data[type][i].updated.on);
+                                        let dbTime = new Date(dbRecord.updated ? dbRecord.updated.on : 0);
 
                                         if (clientTime > dbTime) {
                                             const updatedRecord = { ...dbRecord, ...data[type][i] };
