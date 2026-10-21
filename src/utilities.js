@@ -143,6 +143,7 @@ async function executeUpdateTransaction(pool, arrayName, docId, rawUpdateInput, 
 		delete savePayload.organization_id;
 		delete savePayload.created;
 		delete savePayload.updated;
+		delete savePayload.modified;
 
 		const updateSql = `
 			UPDATE \`${arrayName.replace(/`/g, "")}\`
