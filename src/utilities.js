@@ -29,6 +29,8 @@ const organizations = {};
 /**
  * Dynamically resolves or caches a long-lived MySQL/MariaDB Connection Pool.
  * Caches the connection promise to prevent concurrent, duplicate handshakes.
+ * @private
+ * @environment server
  */
 async function dbClient(data) {
 	const storageUrl = data.storageConfig?.connectionUri || data.storageConfig?.url;
@@ -112,6 +114,8 @@ process.on("orgDeleted", (organization_id) => {
 /**
  * Safe transaction helper to update unstructured payloads with MongoDB behavior inside MySQL.
  * Employs row locking 'FOR UPDATE' to eliminate write/concurrency conflicts.
+ * @private
+ * @environment server
  */
 async function executeUpdateTransaction(pool, arrayName, docId, rawUpdateInput, requestData) {
 	const connection = await pool.getConnection();
@@ -175,6 +179,8 @@ async function executeUpdateTransaction(pool, arrayName, docId, rawUpdateInput, 
 /**
  * Applies MongoDB update operators ($set, $unset, $push, $pull, $addToSet, $inc)
  * recursively on a target record to maintain unified schema manipulation behaviors.
+ * @private
+ * @environment server
  */
 function applyMongoUpdate(record, updatePayload) {
 	let target = { ...record };
@@ -269,6 +275,8 @@ function applyMongoUpdate(record, updatePayload) {
 
 /**
  * Translates standard MongoDB JSON filters into native MySQL query filters.
+ * @private
+ * @environment server
  */
 function compileFilterToSQL(filter, organizationId) {
 	let clauses = ["organization_id = ?"];
@@ -339,6 +347,8 @@ function compileFilterToSQL(filter, organizationId) {
 
 /**
  * Resolves MySQL columns and rows back into unified JSON format.
+ * @private
+ * @environment server
  */
 function parseSqlRow(row) {
 	if (!row) return null;
@@ -380,6 +390,8 @@ function deleteNestedValue(obj, path) {
 
 /**
  * Syncs the output response data arrays back cleanly.
+ * @private
+ * @environment server
  */
 function createData(data, array, type) {
 	if (data[type] && data[type][0] && data[type][0].isFilter === "isEmptyObjectFilter") {
