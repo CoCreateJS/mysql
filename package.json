@@ -1,6 +1,6 @@
 {
   "name": "@cocreate/mysql",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Lightweight MySQL, MariaDB, and Aurora CRUD wrapper and multi-tenant state routing client for the CoCreate ecosystem.",
   "keywords": [
     "mysql",

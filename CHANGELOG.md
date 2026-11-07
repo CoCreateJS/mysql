@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/CoCreateJS/mysql/compare/v2.0.1...v2.0.2) (2026-11-07)
+
+
+### Bug Fixes
+
+* bump CoCreate dependency versions ([3ce3e3e](https://github.com/CoCreateJS/mysql/commit/3ce3e3e1c87dbfae9d00e85701318a44bf0edc69))
+
 ## [2.0.1](https://github.com/CoCreateJS/mysql/compare/v2.0.0...v2.0.1) (2026-11-05)
 
 
