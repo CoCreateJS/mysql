@@ -45,10 +45,10 @@
     "./dist": "./dist/mysql.js"
   },
   "devDependencies": {
-    "@cocreate/webpack": "^2.0.0"
+    "@cocreate/webpack": "^2.0.1"
   },
   "dependencies": {
-    "@cocreate/utils": "^2.0.0",
+    "@cocreate/utils": "^2.0.2",
     "mysql2": "^3.23.1"
   }
 }
